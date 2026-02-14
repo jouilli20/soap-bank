@@ -56,3 +56,24 @@ http://localhost:8080/ws/bank.wsdl
   </soapenv:Body>
 </soapenv:Envelope>
 ```
+## Analyse du contrat
+- XSD: src/main/resources/bank.xsd
+- Namespace (WSDL): ...
+- Operations (portType): GetAccount, Deposit, Withdraw
+- Endpoint: http://localhost:8080/ws
+- WSDL: http://localhost:8080/ws/bank.wsdl
+
+## Fonctionnalité ajoutée
+- Operation ajoutée: Withdraw (retrait)
+
+## Fichiers modifiés
+- src/main/resources/bank.xsd
+- ...Endpoint.java
+- (éventuellement) ...Service.java
+
+## Tests Postman
+- GetAccount A100: OK (capture)
+- Deposit A100 20.00: OK (capture)
+- Fault (amount <= 0 ou compte inexistant): OK (capture)
+- Withdraw nominal: OK (capture)
+- Withdraw Fault (solde insuffisant): OK (capture)

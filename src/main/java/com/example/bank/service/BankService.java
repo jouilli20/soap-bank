@@ -45,4 +45,25 @@ public class BankService {
     acc.balance = acc.balance.add(amount);
     return acc.balance;
   }
+
+  // ✅ Nouvelle opération: Withdraw
+  public BigDecimal withdraw(String accountId, BigDecimal amount) {
+    if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+      throw new InvalidAmountException("Amount must be > 0");
+    }
+
+    Account acc = db.get(accountId);
+    if (acc == null) {
+      throw new UnknownAccountException("Unknown accountId: " + accountId);
+    }
+
+    if (acc.balance.compareTo(amount) < 0) {
+      throw new InsufficientBalanceException(
+          "Insufficient balance for accountId: " + accountId + " (balance=" + acc.balance + ", amount=" + amount + ")"
+      );
+    }
+
+    acc.balance = acc.balance.subtract(amount);
+    return acc.balance;
+  }
 }

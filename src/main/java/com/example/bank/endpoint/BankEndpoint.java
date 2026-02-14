@@ -15,6 +15,8 @@ import com.example.bank.ws.DepositRequest;
 import com.example.bank.ws.DepositResponse;
 import com.example.bank.ws.GetAccountRequest;
 import com.example.bank.ws.GetAccountResponse;
+import com.example.bank.ws.WithdrawRequest;
+import com.example.bank.ws.WithdrawResponse;
 
 @Endpoint
 public class BankEndpoint {
@@ -53,4 +55,15 @@ public class BankEndpoint {
     resp.setNewBalance(newBalance);
     return resp;
   }
+
+  // Nouvelle opération Withdraw
+  @PayloadRoot(namespace = NAMESPACE_URI, localPart = "WithdrawRequest")
+  @ResponsePayload
+  public WithdrawResponse withdraw(@RequestPayload WithdrawRequest request) {
+    BigDecimal newBalance = bankService.withdraw(request.getAccountId(), request.getAmount());
+    WithdrawResponse resp = new WithdrawResponse();
+    resp.setNewBalance(newBalance);
+    return resp;
+  }
 }
+
